@@ -1,8 +1,8 @@
 import "./App.css";
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import io from "socket.io-client";
-
+import {base_url} from './baseUrl'
+ 
 function App() {
   const [socket, setSocket] = useState(null);
   const [receivedMessages, setReceivedMessages] = useState([]);
@@ -12,7 +12,7 @@ function App() {
   const [progress,setProgress] = useState('0%')
   useEffect(() => {
     // Connect to the WebSocket server
-    const newSocket = io("http://192.168.18.105:3001");
+    const newSocket = io(`${base_url}:3001`);
     newSocket.on("connect", () => {
       console.log("Connected to the server");
     });
@@ -107,12 +107,12 @@ function App() {
     reader.readAsArrayBuffer(file);
   };
 
-  const url = 'http://192.168.18.105:3001'
+  // const url = 'http://192.168.18.105:3001'
   const downloadFile = (filename) => {
     if (filename) {
       const downloadLink = document.createElement('a');
       
-      downloadLink.href = `${url}/uploads/${filename}`;
+      downloadLink.href = `${base_url}:3001/uploads/${filename}`;
       downloadLink.download = filename;
       document.body.appendChild(downloadLink);
       downloadLink.click();

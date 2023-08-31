@@ -6,7 +6,7 @@ const { Server } = require("socket.io");
 const multer = require('multer');
 const fs = require('fs');
 const path = require('path');
-
+const base_url  = require('./baseUrl')
 
 
 app.use(cors());
@@ -21,7 +21,7 @@ const upload = multer({ storage: storage });
 
 const io = new Server(server, {
   cors: {
-    origin: "http://192.168.18.105:3000",
+    origin: `${base_url}:3000`,
     methods: ["GET", "POST"],
   },
 });
@@ -72,5 +72,5 @@ app.get('/uploads/:filename', (req, res) => {
 });
 
 server.listen(3001, () => {
-  console.log(`server is running on http://localhost:${3001}`);
+  console.log(`server is running on ${base_url}:${3000}`);
 });
